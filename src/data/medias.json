@@ -68,14 +68,5 @@
     "imdbID": "tt2527338",
     "Type": "movie",
     "Poster": "https://m.media-amazon.com/images/M/MV5BMDljNTQ5ODItZmQwMy00M2ExLTljOTQtZTVjNGE2NTg0NGIxXkEyXkFqcGdeQXVyODkzNTgxMDg@._V1_SX300.jpg"
-  },
-  {
-    "Title": "I don't like Star Wars",
-    "Year": "1977",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-    "imdbID": "1qhs62kkp8gs3w5",
-    "createdAt": "2021-05-28T15:12:34.996Z",
-    "updatedAt": "2021-05-28T15:12:34.996Z"
   }
 ]

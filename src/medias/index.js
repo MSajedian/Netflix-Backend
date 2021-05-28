@@ -65,8 +65,6 @@ mediasRouter.post("/", mediasValidation, async (req, res, next) => {
       const newMedia = {
         ...req.body,
         imdbID: uniqid(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
       };
       const medias = await getMedias();
       medias.push(newMedia);
