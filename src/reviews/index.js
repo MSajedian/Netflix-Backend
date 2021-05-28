@@ -19,7 +19,7 @@ reviewsRouter.get("/", async (req, res, next) => {
 reviewsRouter.get("/:id", async (req, res, next) => {
   try {
     const reviews = await getReviews();
-    const review = reviews.find((elem) => elem._id === req.params._id);
+    const review = reviews.find((elem) => elem.elementId === req.params.id);
     if (review) {
       res.send(review);
     } else {
@@ -38,15 +38,14 @@ reviewsRouter.post("/", reviewsValidation, async (req, res, next) => {
     if (errors.isEmpty()) {
       const newReview = {
         ...req.body,
-        _id: uniqid(),
+        elementId: uniqid(),
         createdAt: new Date(),
-        updatedAt: new Date(),
       };
       const reviews = await getReviews();
       reviews.push(newReview);
       await writeReviews(reviews);
 
-      res.status(201).send({ _id: newReview._id });
+      res.status(201).send({ elementId: newReview.elementId });
     } else {
       next(createError(400, { errorList: errors }));
     }
@@ -62,12 +61,12 @@ reviewsRouter.post("/", reviewsValidation, async (req, res, next) => {
 
 //     if (errors.isEmpty()) {
 //       const remainingReview = reviews.filter(
-//         (elem) => elem._id !== req.params.id
+//         (elem) => elem.elementId !== req.params.id
 //       );
-//       const oldReview = reviews.filter((elem) => elem._id === req.params.id);
+//       const oldReview = reviews.filter((elem) => elem.elementId === req.params.id);
 //       const updatedReview = {
 //         ...req.body,
-//         _id: req.params.id,
+//         elementId: req.params.id,
 //         createdAt: oldReview.createdAt,
 //         updatedAt: new Date(),
 //       };
@@ -90,7 +89,7 @@ reviewsRouter.delete("/:id", async (req, res, next) => {
   try {
     const reviews = await getReviews();
     const remainingReview = reviews.filter(
-      (elem) => elem._id !== req.params.id
+      (elem) => elem.elementId !== req.params.id
     );
     await writeReviews(remainingReview);
     res.status(204).send("deleted successfully");
