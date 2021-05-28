@@ -94,8 +94,6 @@ mediasRouter.put("/:id", mediasValidation, async (req, res, next) => {
       const updatedMedia = {
         ...req.body,
         imdbID: req.params.id,
-        createdAt: oldMedia.createdAt,
-        updatedAt: new Date(),
       };
 
       remainingMedia.push(updatedMedia);
