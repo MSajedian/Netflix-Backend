@@ -10,15 +10,15 @@ const mediasRouter = express.Router();
 mediasRouter.get("/", async (req, res, next) => {
   try {
     const medias = await getMedias();
-    if (req.query.imdbID) {
+    if (req.query.Title) {
       const filteredMedias = medias.filter(
-        (elem) => elem.imdbID === req.query.imdbID
+        (elem) => elem.Title === req.query.Title
       );
 
       if (filteredMedias.length > 0) {
         res.send(filteredMedias);
       } else {
-        next(createError(404, `no media found in ${req.query.imdbID}!`));
+        next(createError(404, `no media found in ${req.query.Title}!`));
       }
     } else {
       res.send(medias);
