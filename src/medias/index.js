@@ -31,12 +31,12 @@ mediasRouter.get("/", async (req, res, next) => {
 mediasRouter.get("/:id", async (req, res, next) => {
   try {
     const medias = await getMedias();
-    const media = medias.find((elem) => elem._id === req.params.id);
+    const media = medias.find((elem) => elem.imdbID === req.params.id);
     if (media) {
       res.send(media);
     } else {
       next(
-        createError(404, `media with the id of ${req.params._id} not found!`)
+        createError(404, `media with the id of ${req.params.imdbID} not found!`)
       );
     }
   } catch (error) {
@@ -64,7 +64,7 @@ mediasRouter.post("/", mediasValidation, async (req, res, next) => {
     if (errors.isEmpty()) {
       const newMedia = {
         ...req.body,
-        _id: uniqid(),
+        imdbID: uniqid(),
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -72,7 +72,7 @@ mediasRouter.post("/", mediasValidation, async (req, res, next) => {
       medias.push(newMedia);
       await writeMedias(medias);
 
-      res.status(201).send({ _id: newMedia._id });
+      res.status(201).send({ imdbID: newMedia.imdbID });
     } else {
       next(createError(400, { errorList: errors }));
     }
@@ -88,12 +88,12 @@ mediasRouter.put("/:id", mediasValidation, async (req, res, next) => {
 
     if (errors.isEmpty()) {
       const remainingMedia = medias.filter(
-        (elem) => elem._id !== req.params.id
+        (elem) => elem.imdbID !== req.params.id
       );
-      const oldMedia = medias.filter((elem) => elem._id === req.params.id);
+      const oldMedia = medias.filter((elem) => elem.imdbID === req.params.id);
       const updatedMedia = {
         ...req.body,
-        _id: req.params.id,
+        imdbID: req.params.id,
         createdAt: oldMedia.createdAt,
         updatedAt: new Date(),
       };
@@ -116,7 +116,7 @@ mediasRouter.delete("/:id", async (req, res, next) => {
   try {
     const medias = await getMedias();
     const remainingMedia = medias.filter(
-      (elem) => elem._id !== req.params.id
+      (elem) => elem.imdbID !== req.params.id
     );
     await writeMedias(remainingMedia);
     res.status(204).send("deleted successfully");
