@@ -12,20 +12,20 @@ mediasRouter.get("/", async (req, res, next) => {
     const medias = await getMedias();
     if (req.query.Title) {
       const filteredMedias = medias.filter(
-        (elem) => elem.Title === req.query.Title
+        (elem) => elem.Title.indexOf(req.query.Title) !== -1
       );
 
-      if (filteredMedias.length > 0) {
-        res.send(filteredMedias);
-      } else {
-        next(createError(404, `no media found in ${req.query.Title}!`));
-      }
+if (filteredMedias.length > 0) {
+  res.send(filteredMedias);
+} else {
+  next(createError(404, `no media found in ${req.query.Title}!`));
+}
     } else {
-      res.send(medias);
-    }
+  res.send(medias);
+}
   } catch (error) {
-    next(error);
-  }
+  next(error);
+}
 });
 
 mediasRouter.get("/:id", async (req, res, next) => {
